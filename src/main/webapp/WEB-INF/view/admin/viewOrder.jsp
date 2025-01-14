@@ -1,0 +1,286 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr"
+	data-theme="theme-default" data-assets-path="../assets/"
+	data-template="vertical-menu-template-free">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+<title>Admin | View Orders</title>
+
+<meta name="description" content="" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon"
+	href="<%=request.getContextPath()%>/adminResources/images/SAC.jpg" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+	rel="stylesheet" />
+
+<!-- Icons. Uncomment required icon fonts -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/boxicons.css" />
+
+
+<!-- Vendors CSS -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/perfect-scrollbar.css" />
+
+<!-- Page CSS -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/responsive.bootstrap5.min.css" />
+
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/dataTables.bootstrap5.min.css" />
+
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/customiser.css" />
+
+<!-- Core CSS -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/core.css"
+	class="template-customizer-core-css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/theme-default.css"
+	class="template-customizer-theme-css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/adminResources/css/demo.css" />
+
+<!-- Helpers -->
+<script src="<%=request.getContextPath()%>/adminResources/js/helpers.js"></script>
+
+<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+<script src="<%=request.getContextPath()%>/adminResources/js/config.js"></script>
+</head>
+
+<body>
+	<!-- Layout wrapper -->
+	<div class="layout-wrapper layout-content-navbar">
+		<div class="layout-container">
+			<!-- Menu -->
+			<jsp:include page="menu.jsp"></jsp:include>
+			<!-- / Menu -->
+
+			<!-- Layout container -->
+			<div class="layout-page">
+				<!-- Navbar -->
+
+				<jsp:include page="header.jsp"></jsp:include>
+				<!-- / Navbar -->
+
+				<!-- Content wrapper -->
+				<div class="content-wrapper">
+					<!-- Content -->
+
+					<div class="container-xxl flex-grow-1 container-p-y">
+
+						<div class="card">
+							<h5 class="card-header">View Orders</h5>
+							<hr class="my-0" />
+							<div class=" text-nowrap m-3">
+								<table id="example"
+									class="table table-hover dt-responsive nowrap">
+									<thead>
+										<tr>
+											<th></th>
+											<th><input type="checkbox" onclick="checkAll(this)" /></th>
+											<th>Id</th>
+											<th>Client Name</th>
+											<th>Client Items</th>
+											<th>Length</th>
+											<th>Width</th>
+											<th>Breath</th>
+											<th>Quantity</th>
+											<th id="status">Status</th>
+											<th>Process Action</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<c:forEach items="${orderList}" var="i" varStatus="j">
+										<tbody class="table-border-bottom-0">
+											<tr>
+												<td></td>
+												<td><input type="checkbox" name=""></td>
+												<td>${j.count}</td>
+												<td>${i.clientVO.clientName}</td>
+												<td>${i.clientReqVO.clientItems}</td>
+												<td>${i.clientReqVO.length}</td>
+												<td>${i.clientReqVO.width}</td>
+												<td>${i.clientReqVO.height}</td>
+												<td>${i.orderQuantity}</td>
+												<td>${i.processStatus}</td>
+												<td>
+													<div class="d-flex align-items-center">
+														<!-- 	<button type="button"
+																class="btn btn-sm btn-outline-success">
+																<span class="tf-icons bx bx-check"></span>&nbsp; Start
+															</button>		 -->
+
+													</div>
+													<div class="d-flex align-items-center">
+														<a onclick="status" data-toggle="tooltip"
+															data-placement="top" title="Edit User"
+															data-original-title="Edit"
+															href="startOrder?id=${i.orderId}"><button class="btn btn-outline-primary" id="process-btn" onclick="processClick()">Start Process</button>
+															</a>
+															
+															<!-- <button type="button"
+																class="btn btn-sm btn-outline-success">
+																<span class="tf-icons bx bx-check"></span>&nbsp; Start
+															</button></a> -->
+													</div>
+
+												</td>
+												<td>
+													<div class="d-flex align-items-center">
+														<a data-toggle="tooltip" data-placement="top"
+															title="Edit Order" data-original-title="Edit"
+															href="editOrder?id=${i.orderId}"><i
+															class="bx bx-edit"></i></a> <a data-toggle="tooltip"
+															data-placement="top" title="Delete Order"
+															data-original-title="Delete"
+															href="deleteOrder?id=${i.orderId}"><i
+															class="bx bx-trash-alt text-danger ms-2"></i></a>
+													</div>
+												</td>
+											</tr>
+									</c:forEach>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- / Content -->
+				</div>
+				<!-- Footer -->
+				<jsp:include page="footer.jsp"></jsp:include>
+				<!-- / Footer -->
+			</div>
+
+			<!-- Content wrapper -->
+		</div>
+		<!-- / Layout page -->
+
+
+		<!-- Overlay -->
+		<div class="layout-overlay layout-menu-toggle"></div>
+	</div>
+
+
+	<!-- Core JS -->
+	<!-- build:js assets/vendor/js/core.js -->
+
+	<script src="<%=request.getContextPath()%>/adminResources/js/jquery.js"></script>
+	<script src="<%=request.getContextPath()%>/adminResources/js/popper.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/bootstrap.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/perfect-scrollbar.js"></script>
+	<%-- 
+		<script
+			src="<%=request.getContextPath()%>/adminResources/js/table-treeview.js"></script>
+
+		<script async
+			src="<%=request.getContextPath()%>/adminResources/js/chart-custom.js"></script>
+ --%>
+	<script src="<%=request.getContextPath()%>/adminResources/js/menu.js"></script>
+	<!-- endbuild -->
+
+	<!-- Vendors JS -->
+
+	<!-- Main JS -->
+	<script src="<%=request.getContextPath()%>/adminResources/js/main.js"></script>
+
+	<!-- Page JS -->
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/customizer.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/jquery.dataTables.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/dataTables.bootstrap5.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/dataTables.responsive.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/responsive.bootstrap5.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/jquery.validate.js"></script>
+
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/ordervalidation.js"></script>
+	<!-- Place this tag in your head or just before your close body tag. -->
+
+
+	<script
+		src="<%=request.getContextPath()%>/adminResources/js/buttons.js"></script>
+<!-- <script>
+  let isProcessStarted = false;
+  let isProcessHeld = false;
+
+  function processClick() {
+    const btn = document.getElementById("process-btn");
+    if (!isProcessStarted) {
+      isProcessStarted = true;
+      btn.innerText = "Hold Process";
+      // Start the process here
+      updateProcessStatus("running");
+    } else if (isProcessStarted && !isProcessHeld) {
+      isProcessHeld = true;
+      btn.innerText = "Resume Process";
+      // Hold the process here
+      updateProcessStatus("on_hold");
+    } else {
+      isProcessHeld = false;
+      btn.innerText = "Hold Process";
+      // Resume the process here
+      updateProcessStatus("running");
+    }
+  }
+
+  function updateProcessStatus(status) {
+    // Send a POST request to a JSP script to update the status of the process in the database
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_process_status.jsp", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(`status=${status}`);
+
+    // Retrieve the current status of the process from the database
+    const xhr2 = new XMLHttpRequest();
+    xhr2.open("GET", "get_process_status.jsp", true);
+    xhr2.onreadystatechange = function() {
+      if (xhr2.readyState === XMLHttpRequest.DONE && xhr2.status === 200) {
+        const status = xhr2.responseText;
+        if (status === "running") {
+          isProcessStarted = true;
+          isProcessHeld = false;
+          document.getElementById("process-btn").innerText = "Hold Process";
+        } else if (status === "on_hold") {
+          isProcessStarted = true;
+          isProcessHeld = true;
+          document.getElementById("process-btn").innerText = "Resume Process";
+        }
+      }
+    };
+    xhr2.send();
+  }
+
+  // Get the current status of the process from the database
+  updateProcessStatus("");
+</script> -->
+
+</body>
+</html>
